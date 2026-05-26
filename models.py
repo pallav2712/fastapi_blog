@@ -20,7 +20,7 @@ class User(Base):
         default=None,
     )
 
-    posts: Mapped[list[Post]] = relationship(
+    posts: Mapped[list[Post]] = relationship(    #sqlalchemy docs
         back_populates="author", 
         cascade="all, delete-orphan")
 
