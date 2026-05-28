@@ -20,7 +20,6 @@ import models
 from database import Base, engine, get_db
 from routers import posts, users
 
-
 #  TODO: 1. Decorator (construct), 2. yield (keyword) 3. Generator (construct) 4. Async (construct)
 """
 # global variable is bad, never use it directly in a method/function, comes with lots 
@@ -39,9 +38,7 @@ async def database_synchronize(_app: FastAPI):
     # Shutdown
     await engine.dispose()
 
-
 app = FastAPI(lifespan=database_synchronize)
-
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.mount("/media", StaticFiles(directory="media"), name="media")
@@ -109,6 +106,24 @@ async def user_posts_page(
         request,
         "user_posts.html",
         {"posts": posts, "user": user, "title": f"{user.username}'s Posts"},
+    )
+
+
+@app.get("/login", include_in_schema=False)
+async def login_page(request: Request):
+    return templates.TemplateResponse(
+        request,
+        "login.html",
+        {"title": "Login"},
+    )
+
+
+@app.get("/register", include_in_schema=False)
+async def register_page(request: Request):
+    return templates.TemplateResponse(
+        request,
+        "register.html",
+        {"title": "Register"},
     )
 
 
