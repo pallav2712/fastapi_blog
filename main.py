@@ -56,7 +56,7 @@ async def home(request: Request, db: Annotated[AsyncSession, Depends(get_db)]):
         select(models.Post).options(selectinload(models.Post.author)).order_by(models.Post.date_posted.desc()),  #lazy loading
     )
     posts = result.scalars().all()
-    return templates.TemplateResponse(
+    return templates.TemplateResponse( # rendering with data (fill the blanks)
         request,
         "home.html",
         {"posts": posts, "title": "Home"},
@@ -124,6 +124,14 @@ async def register_page(request: Request):
         request,
         "register.html",
         {"title": "Register"},
+    )
+
+@app.get("/account", include_in_schema=False)
+async def account_page(request: Request):
+    return templates.TemplateResponse(
+        request,
+        "account.html",
+        {"title": "Account"},
     )
 
 

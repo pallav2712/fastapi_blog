@@ -52,7 +52,7 @@
             showModal('successModal');
 
             document.getElementById('successModal').addEventListener('hidden.bs.modal', () => {
-              window.location.href = '/';
+              window.location.href = '/'; // homepage
             }, { once: true });
           } else {
             const error = await response.json();
