@@ -5,7 +5,7 @@ from pathlib import Path
 from PIL import Image, ImageOps
 
 PROFILE_PICS_DIR = Path("media/profile_pics")
-
+# binary data v/s binary stream
 def process_profile_image(content: bytes) -> str:
     with Image.open(BytesIO(content)) as original:
         img = ImageOps.exif_transpose(original)
@@ -18,7 +18,7 @@ def process_profile_image(content: bytes) -> str:
         filename = f"{uuid.uuid4().hex}.jpg" #giving unique ids(hex) to file
         filepath = PROFILE_PICS_DIR / filename
 
-        PROFILE_PICS_DIR.mkdir(parents=True, exist_ok=True)
+        PROFILE_PICS_DIR.mkdir(parents=True, exist_ok=True) #actual path is made here
 
         img.save(filepath, "JPEG", quality=85, optimize=True)
 
