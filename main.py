@@ -30,16 +30,24 @@ db = AsyncSessionLocal()
 """
 
 #Base.metadata.create_all(bind=engine)
+# @asynccontextmanager
+# async def lifespan(_app: FastAPI):
+#     # Startup
+#     async with engine.begin() as conn:
+#         await conn.run_sync(Base.metadata.create_all)
+#     yield
+#     # Shutdown
+#     await engine.dispose()
+
 @asynccontextmanager
-async def database_synchronize(_app: FastAPI):
-    # Startup
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+async def lifespan(_app: FastAPI):
     yield
     # Shutdown
     await engine.dispose()
 
-app = FastAPI(lifespan=database_synchronize)
+
+app = FastAPI(lifespan=lifespan)
+
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.mount("/media", StaticFiles(directory="media"), name="media")
