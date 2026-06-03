@@ -7,7 +7,6 @@ class Settings(BaseSettings):
         env_file=".env",
         env_file_encoding="utf-8",
     )
-
     database_url: str
 
     secret_key: SecretStr
@@ -15,10 +14,15 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = 30
     
     max_upload_size_bytes: int = 5 * 1024 * 1024
-
     posts_per_page: int = 10
-
     reset_token_expire_minutes: int = 60
+
+    ## S3 Settings for config.py
+    s3_bucket_name: str
+    s3_region: str = "ap-south-1"
+    s3_access_key_id: SecretStr | None = None
+    s3_secret_access_key: SecretStr | None = None
+    s3_endpoint_url: str | None = None
 
     mail_server: str = "localhost"
     mail_port: int = 587
