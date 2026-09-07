@@ -16,7 +16,7 @@ async def test_get_posts_empty(client: AsyncClient):
 
 
 @pytest.mark.anyio
-async def test_get_post_not_found(client: AsyncClient):
+async def test_get_post_not_found(client: AsyncClient): 
     response = await client.get("/api/posts/999")
 
     assert response.status_code == 404
